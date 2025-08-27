@@ -3,7 +3,7 @@
 # os.environ["STREAMLIT_SERVER_PORT"] = str(port)
 # import numpy as np
 # import pandas as pd
-# from PIL import Image
+# from PIL import Image 
 # import qrcode
 # from qrcode.constants import ERROR_CORRECT_H
 # import io
