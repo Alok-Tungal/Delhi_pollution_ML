@@ -217,37 +217,6 @@ def ensure_session_defaults():
     if "last_present" not in st.session_state:
         st.session_state.last_present = None
 
-
-
-
-# ──────────────────────────────
-# PAGE 1: WELCOME + QR
-# ──────────────────────────────
-# if page.startswith("1)"):
-#     st.markdown("<h1 style='text-align:center; color:#2E86C1;'>🌍 Delhi AQI Prediction Dashboard</h1>", unsafe_allow_html=True)
-#     c1, c2 = st.columns([2,1])
-#     with c1:
-#         st.subheader("✨ Welcome!")
-#         st.markdown("""
-#         This interactive dashboard helps you understand and predict
-#         <b>Delhi's Air Quality Index (AQI)</b> 📊.<br>
-#         ✅ Real-time like predictions &nbsp; ✅ Pollutant-wise insights &nbsp; ✅ Health recommendations 🩺
-#         """, unsafe_allow_html=True)
-#         st.markdown("### 🌟 Key Pollutants Tracked")
-#         def _card(bg_hex, title, subtitle):
-#             return f"<div style='background:#{bg_hex}; padding:16px; border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.04);'>{title}<br><small style='color:#333;'>{subtitle}</small></div>"
-#         r1c1,r1c2,r1c3 = st.columns(3)
-#         r1c1.markdown(_card("FADBD8","🌫️ <b>PM2.5</b>","Fine particulate matter"), unsafe_allow_html=True)
-#         r1c2.markdown(_card("D6EAF8","🌪️ <b>PM10</b>","Coarse particles"), unsafe_allow_html=True)
-#         r1c3.markdown(_card("E8DAEF","🌬️ <b>NO₂</b>","Nitrogen dioxide"), unsafe_allow_html=True)
-#         r2c1,r2c2,r2c3 = st.columns(3)
-#         r2c1.markdown(_card("FCF3CF","🔥 <b>SO₂</b>","Sulfur dioxide"), unsafe_allow_html=True)
-#         r2c2.markdown(_card("D5F5E3","🟢 <b>CO</b>","Carbon monoxide"), unsafe_allow_html=True)
-#         r2c3.markdown(_card("FDEDEC","☀️ <b>O₃</b>","Ozone"), unsafe_allow_html=True)
-#     with c2:
-#         st.image(make_qr_bytes(APP_URL), caption="📱 Scan to open on mobile", use_container_width=True)
-
-
 if "nav" not in st.session_state:
     st.session_state.nav = "1) Understand + Share"
     
@@ -375,10 +344,6 @@ elif page.startswith("4)"):
         val = st.slider(f"{col}", 0, 500, int(defaults[i]), step=1)
         sliders.append(val)
     st.session_state.values = {col: sliders[i] for i,col in enumerate(COLUMNS)}
-
-# ──────────────────────────────
-# PAGE 5: PREDICT AQI
-# ──────────────────────────────
 # ──────────────────────────────
 # 5) Predict Delhi AQI Category
 # ──────────────────────────────
@@ -424,24 +389,6 @@ elif page.startswith("5)"):
 
         except Exception as e:
             st.error(f"Prediction failed: {e}")
-
-
-# ──────────────────────────────
-# PAGE 6: COMPARE WITH DELHI AVG
-# ──────────────────────────────
-# elif page.startswith("6)"):
-#     st.title("📊 Compare with Delhi Avg & WHO")
-#     df_cmp = comparison_dataframe(st.session_state.predicted_values or st.session_state.values)
-#     fig = px.bar(
-#         df_cmp.melt(id_vars="Pollutant", value_vars=["Predicted","Delhi Avg","WHO"]),
-#         x="Pollutant", y="value", color="variable", barmode="group",
-#         labels={"value":"Concentration (µg/m³ / ppm)", "variable":"Source"}
-#     )
-#     st.plotly_chart(fig, use_container_width=True)
-#     csv_bytes = df_cmp.to_csv(index=False).encode("utf-8")
-#     st.download_button("📥 Download CSV", data=csv_bytes, file_name="aqi_comparison.csv", mime="text/csv")
-
-
 
 elif page.startswith("6)"):
     import pandas as pd
@@ -525,4 +472,3 @@ elif page.startswith("6)"):
         file_name="predicted_vs_delhi_who.csv",
         mime="text/csv"
     )
-
